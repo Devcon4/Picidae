@@ -9,7 +9,7 @@ COPY . /app
 
 RUN cd /app; npm run build
 
-FROM nginx:alpine as Runtime
+FROM nginxinc/nginx-unprivileged:alpine as Runtime
 
 RUN addgroup -S picidaegroup \
   && adduser -S picidaeuser -G picidaegroup

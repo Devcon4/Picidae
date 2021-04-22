@@ -1,0 +1,23 @@
+FROM node:alpine as Build
+
+RUN apk add chromium
+
+RUN addgroup -S picidaegroup \
+  && adduser -S picidaeuser -G picidaegroup
+
+RUN mkdir -p /app \
+  && chown -R picidaeuser /app
+
+USER picidaeuser
+
+ENV CHROME_BIN=/user/bin/chromium-browser
+
+COPY ./package.json /app/package.json
+COPY ./package-lock.json /app/package-lock.json
+
+RUN cd /app; npm ci
+
+COPY . /app
+
+WORKDIR /app
+ENTRYPOINT [ "npm", "run" ]

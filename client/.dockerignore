@@ -1,0 +1,9 @@
+
+/node_modules
+/dist
+/.cache
+/.vscode
+/.github
+/.gitignore
+/dockerfile
+/dockerfile.ci

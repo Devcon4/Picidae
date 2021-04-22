@@ -44,7 +44,9 @@ jobs:
         push: true
         cache-from: type=registry,ref=devcon4/picidae:latest
         cache-to: type=inline
-        tags: devcon4/picidae:${{ needs.get_semver.outputs.semVer }} latest
+        tags: |
+          devcon4/picidae:${{ needs.get_semver.outputs.semVer }}
+          devcon4/picidae:latest
   create_tag:
     name: Push github tag
     runs-on: ubuntu-latest

@@ -1,4 +1,4 @@
-FROM node:latest as Build
+FROM node:alpine as Build
 
 RUN addgroup -S picidaegroup \
   && adduser -S picidaeuser -G picidaegroup

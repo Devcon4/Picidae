@@ -19,6 +19,7 @@ jobs:
         uses: gittools/actions/gitversion/execute@v0.9.7
     outputs:
       semVer: ${{ steps.gitversion.outputs.semVer }}
+      nuGetVersionV2: ${{ steps.gitversion.outputs.NuGetVersionV2 }}
   build_and_push_dockerfile_ci:
     name: Push/build the ci dockerfile
     runs-on: ubuntu-latest
@@ -44,7 +45,7 @@ jobs:
           cache-from: type=registry,ref=devcon4/picidae-ci:latest
           cache-to: type=inline
           tags: |
-            ghcr.io/devcon4/picidae-ci:${{ needs.get_semver.outputs.semVer }}
+            ghcr.io/devcon4/picidae-ci:${{ needs.get_semver.outputs.nuGetVersionV2 }}
   run_lint:
     name: Lint angular client
     runs-on: ubuntu-latest
@@ -53,7 +54,7 @@ jobs:
       credentials:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GITHUB_TOKEN }}
-      image: ghcr.io/devcon4/picidae-ci:${{ needs.get_semver.outputs.semVer }}
+      image: ghcr.io/devcon4/picidae-ci:${{ needs.get_semver.outputs.nuGetVersionV2 }}
     steps:
       - name: Run lint
         run: lint

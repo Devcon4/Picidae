@@ -1,6 +1,7 @@
 name: Pull Request Checks
 on:
   pull_request:
+  workflow_dispatch:
 jobs:
   get_semver:
     name: Create semver
@@ -44,8 +45,7 @@ jobs:
           push: true
           cache-from: type=registry,ref=devcon4/picidae-ci:latest
           cache-to: type=inline
-          tags: |
-            ghcr.io/devcon4/picidae-ci:latest
+          tags: ghcr.io/devcon4/picidae-ci:latest
   run_lint:
     name: Lint angular client
     runs-on: ubuntu-latest

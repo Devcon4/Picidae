@@ -47,10 +47,10 @@ jobs:
         with:
           context: ./client
           file: ./client/dockerfile.ci
-          pull: true
+          # pull: true
           push: true
-          cache-from: type=registry,ref=ghcr.io/devcon4/picidae-ci:${{ needs.get_semver.outputs.escapedBranchName }}
-          cache-to: type=inline
+          # cache-from: type=registry,ref=ghcr.io/devcon4/picidae-ci:${{ needs.get_semver.outputs.escapedBranchName }}
+          # cache-to: type=inline
           tags: |
             ghcr.io/devcon4/picidae-ci:${{ needs.get_semver.outputs.escapedBranchName }}
             ghcr.io/devcon4/picidae-ci:${{ needs.get_semver.outputs.nuGetVersionV2 }}

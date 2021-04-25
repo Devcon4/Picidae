@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: event Log
-        run: echo | ${{github.event.pull_request}}
+        run: echo ${{ github.event.pull_request.head.sha }}
       - name: Checkout
         uses: actions/checkout@v2
         with:

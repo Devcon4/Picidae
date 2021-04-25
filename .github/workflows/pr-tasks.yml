@@ -1,16 +1,12 @@
 name: Pull Request Checks
 on:
-  push:
-    branches-ignore:
-      - "master"
   pull_request:
+    types: [opened, synchronize, edited]
 jobs:
   get_semver:
     name: Create semver
     runs-on: ubuntu-latest
     steps:
-      - name: event Log
-        run: echo ${{ github.event.pull_request.head.sha }}
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -64,6 +60,6 @@ jobs:
       image: ghcr.io/devcon4/picidae-ci:latest
     steps:
       - name: Run lint
-        run: lint
+        run: npm run lint
       - name: Run test
-        run: test-ci
+        run: npm run test-ci

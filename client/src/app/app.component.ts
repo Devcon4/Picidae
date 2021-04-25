@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'Picidae version second branch!';
+  title = 'Picidae version new branch!';
 }

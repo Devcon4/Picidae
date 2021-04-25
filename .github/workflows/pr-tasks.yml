@@ -56,7 +56,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
       image: ghcr.io/devcon4/picidae-ci:latest
     steps:
-      - name: Docker login
+      - name: Run lint
         run: cd /app && npm run lint
       - name: Run test
         run: cd /app && npm run test-ci

@@ -43,7 +43,7 @@ jobs:
           file: ./client/dockerfile.ci
           pull: true
           push: true
-          cache-from: type=registry,ref=ghcr.io/devcon4/picidae-ci:latest
+          # cache-from: type=registry,ref=ghcr.io/devcon4/picidae-ci:latest
           cache-to: type=inline
           tags: ghcr.io/devcon4/picidae-ci:latest
   run_lint:

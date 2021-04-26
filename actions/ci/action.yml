@@ -8,4 +8,5 @@ inputs:
 runs:
   using: "docker"
   image: "../../client/dockerfile.ci"
-  entrypoint: "npm run ${{inputs.npm-command}}"
+  args:
+    - ${{ inputs.npm-command }}

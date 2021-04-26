@@ -52,12 +52,14 @@ jobs:
     name: Run pr ci commands
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Lint
-        uses: "../../actions/ci"
+        uses: "./actions/ci"
         with:
           npm-command: "lint"
       - name: Test
-        uses: "../../actions/ci"
+        uses: "./actions/ci"
         with:
           npm-command: "test-ci"
   # run_lint:

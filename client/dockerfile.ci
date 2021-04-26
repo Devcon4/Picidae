@@ -16,7 +16,7 @@ ENV CHROME_BIN=/user/bin/chromium-browser
 COPY ./client/package.json /app/package.json
 COPY ./client/package-lock.json /app/package-lock.json
 
-RUN cd /client/app; npm ci
+RUN cd /app; npm ci
 
 COPY ./client /app
 

@@ -12,14 +12,13 @@ USER picidaeuser
 
 ENV CHROME_BIN=/user/bin/chromium-browser
 
-WORKDIR /client
 
-COPY ./package.json /app/package.json
-COPY ./package-lock.json /app/package-lock.json
+COPY ./client/package.json /app/package.json
+COPY ./client/package-lock.json /app/package-lock.json
 
-RUN cd /app; npm ci
+RUN cd /client/app; npm ci
 
-COPY . /app
+COPY ./client /app
 
 WORKDIR /app
 ENTRYPOINT [ "npm", "run" ]

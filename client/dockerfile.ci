@@ -22,3 +22,4 @@ COPY ./client /app
 
 WORKDIR /app
 ENTRYPOINT [ "npm", "run" ]
+CMD [ "lint" ]

@@ -53,11 +53,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Lint
-        uses: "./actions/ci"
+        uses: "/actions/ci"
         with:
           npm-command: "lint"
       - name: Test
-        uses: "./actions/ci"
+        uses: "/actions/ci"
         with:
           npm-command: "test-ci"
   # run_lint:

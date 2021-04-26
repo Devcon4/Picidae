@@ -48,17 +48,29 @@ jobs:
           cache-from: type=registry,ref=devcon4/picidae-ci:latest
           cache-to: type=inline
           tags: ghcr.io/devcon4/picidae-ci:latest
-  run_lint:
-    name: Lint angular client
+  run_ci:
+    name: Run pr ci commands
     runs-on: ubuntu-latest
-    needs: build_and_push_dockerfile_ci
-    container:
-      credentials:
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-      image: ghcr.io/devcon4/picidae-ci:latest
     steps:
-      - name: Run lint
-        run: cd ./app && npm run lint
-      - name: Run test
-        run: cd ./app && npm run test-ci
+      - name: Lint
+        uses: "./actions/ci"
+        with:
+          npm-command: "lint"
+      - name: Test
+        uses: "./actions/ci"
+        with:
+          npm-command: "test-ci"
+  # run_lint:
+  #   name: Lint angular client
+  #   runs-on: ubuntu-latest
+  #   needs: build_and_push_dockerfile_ci
+  #   container:
+  #     credentials:
+  #       username: ${{ github.repository_owner }}
+  #       password: ${{ secrets.GITHUB_TOKEN }}
+  #     image: ghcr.io/devcon4/picidae-ci:latest
+  #   steps:
+  #     - name: Run lint
+  #       run: cd ./app && npm run lint
+  #     - name: Run test
+  #       run: cd ./app && npm run test-ci

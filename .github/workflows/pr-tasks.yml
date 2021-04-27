@@ -1,9 +1,7 @@
 name: Pull Request Checks
 on:
-  push:
-    branches-ignore:
-      - "master"
   pull_request:
+    types: [opened, synchronize, edited]
 jobs:
   get_semver:
     name: Create semver
@@ -64,9 +62,9 @@ jobs:
       - name: Docker pull
         run: docker pull ghcr.io/devcon4/picidae-ci:latest
       - name: Lint
-        run: docker run -it ghcr.io/devcon4/picidae-ci:latest lint
+        run: docker run ghcr.io/devcon4/picidae-ci:latest lint
       - name: test
-        run: docker run -it ghcr.io/devcon4/picidae-ci:latest test-ci
+        run: docker run ghcr.io/devcon4/picidae-ci:latest test-ci
   # run_lint:
   #   name: Lint angular client
   #   runs-on: ubuntu-latest

@@ -1,4 +1,5 @@
 FROM node:alpine as Build
+# Context will be root dir not /client because of github action weirdness
 
 # RUN addgroup -S picidaegroup \
 #   && adduser -S picidaeuser -G picidaegroup
@@ -8,12 +9,12 @@ FROM node:alpine as Build
 
 # USER picidaeuser
 
-COPY ./package.json /app/package.json
-COPY ./package-lock.json /app/package-lock.json
+COPY ./client/package.json /app/package.json
+COPY ./client/package-lock.json /app/package-lock.json
 
 RUN cd /app; npm ci
 
-COPY . /app
+COPY ./client /app
 
 RUN cd /app; npm run build
 

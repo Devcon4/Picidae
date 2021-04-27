@@ -64,15 +64,9 @@ jobs:
       - name: Docker pull
         run: docker pull ghcr.io/devcon4/picidae-ci:latest
       - name: Lint
-        uses: "./client"
-        with:
-          tag: "latest"
-          npm-command: "lint"
-      - name: Test
-        uses: "./client"
-        with:
-          tag: "latest"
-          npm-command: "test-ci"
+        run: docker run -it ghcr.io/devcon4/picidae-ci:latest lint
+      - name: test
+        run: docker run -it ghcr.io/devcon4/picidae-ci:latest test-ci
   # run_lint:
   #   name: Lint angular client
   #   runs-on: ubuntu-latest

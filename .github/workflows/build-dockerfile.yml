@@ -107,6 +107,7 @@ jobs:
     name: Push github tag
     runs-on: ubuntu-latest
     needs:
+      - get_semver
       - build_and_push_dockerfile
     steps:
       - name: Create tag

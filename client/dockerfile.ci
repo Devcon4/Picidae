@@ -1,5 +1,7 @@
 FROM node:alpine as Build
 
+# Context will be root dir not /client because of github action weirdness
+
 RUN apk add chromium
 
 RUN addgroup -S picidaegroup \

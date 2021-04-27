@@ -27,12 +27,12 @@ jobs:
           tags: picidae-ci:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
-          outputs: type=docker,dest=/tmp/picidae-latest.tar
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: picidae-latest
-          path: /tmp/picidae-latest.tar
+          # outputs: type=docker,dest=/tmp/picidae-latest.tar
+      # - name: Upload artifact
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: picidae-latest
+      #     path: /tmp/picidae-latest.tar
       - # Temp fix
         # https://github.com/docker/build-push-action/issues/252
         # https://github.com/moby/buildkit/issues/1896
@@ -48,15 +48,21 @@ jobs:
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Download artifact
-        uses: actions/download-artifact@v2
+      - name: Cache Docker layers
+        uses: actions/cache@v2
         with:
-          name: picidae-latest
-          path: /tmp
-      - name: Load Docker image
-        run: |
-          docker load --input /tmp/picidae-latest.tar
-          docker image ls -a
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+      - name: Load dockerfile
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./client/dockerfile.ci
+          load: true
+          tags: picidae-ci:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
       - name: Lint
         run: docker run picidae-ci:latest lint
   test:
@@ -67,14 +73,22 @@ jobs:
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Download artifact
-        uses: actions/download-artifact@v2
+      - name: Load dockerfile
+        uses: docker/build-push-action@v2
         with:
-          name: picidae-latest
-          path: /tmp
-      - name: Load Docker image
-        run: |
-          docker load --input /tmp/picidae-latest.tar
-          docker image ls -a
+          context: .
+          file: ./client/dockerfile.ci
+          load: true
+          tags: picidae-ci:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+      # - name: Download artifact
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: picidae-latest
+      #     path: /tmp
+      # - name: Load Docker image
+      #   run: |
+      #     docker load --input /tmp/picidae-latest.tar
+      #     docker image ls -a
       - name: Test
         run: docker run picidae-ci:latest test-ci

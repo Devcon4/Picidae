@@ -1,5 +1,7 @@
 FROM node:alpine as Build
 
+# Context will be root dir not /client because of github action weirdness
+
 RUN apk add chromium
 
 RUN addgroup -S picidaegroup \
@@ -12,12 +14,14 @@ USER picidaeuser
 
 ENV CHROME_BIN=/user/bin/chromium-browser
 
-COPY ./package.json /app/package.json
-COPY ./package-lock.json /app/package-lock.json
+
+COPY ./client/package.json /app/package.json
+COPY ./client/package-lock.json /app/package-lock.json
 
 RUN cd /app; npm ci
 
-COPY . /app
+COPY ./client /app
 
 WORKDIR /app
 ENTRYPOINT [ "npm", "run" ]
+CMD [ "lint" ]

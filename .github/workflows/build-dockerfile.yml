@@ -22,7 +22,7 @@ jobs:
     outputs:
       semVer: ${{ steps.gitversion.outputs.semVer }}
   build_and_push_dockerfile:
-    name: Push Docker image to GitHub Packages
+    name: Build the main docker image
     runs-on: ubuntu-latest
     needs: get_semver
     steps:
@@ -47,6 +47,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
+          file: ./client/dockerfile
           pull: true
           push: true
           cache-from: type=local,src=/tmp/.main-cache

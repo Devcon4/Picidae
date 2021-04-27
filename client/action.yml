@@ -3,8 +3,14 @@ description: "Run CI commands"
 inputs:
   npm-command:
     default: "lint"
-    description: "Npm script to run"
+    description: "npm script to run"
+    required: true
+  tag:
+    default: "latest"
+    description: "Picidae-ci tag to use for action"
     required: true
 runs:
   using: "docker"
-  image: "./dockerfile.ci"
+  image: "ghcr.io/devcon4/picidae-ci:${{inputs.tag}}"
+  args:
+    - ${{inputs.npm-command}}

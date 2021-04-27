@@ -11,7 +11,9 @@ jobs:
         uses: actions/cache@v2
         id: cache
         with:
-          path: /tmp/.buildx-cache
+          path: |
+            /tmp/.buildx-cache
+            /tmp/picidae-latest.tar
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
@@ -31,7 +33,7 @@ jobs:
           tags: picidae-ci:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
-          # outputs: type=docker,dest=/tmp/picidae-latest.tar
+          outputs: type=docker,dest=/tmp/picidae-latest.tar
       # - name: Upload artifact
       #   uses: actions/upload-artifact@v2
       #   with:
@@ -58,7 +60,7 @@ jobs:
       - name: Cache Docker layers
         uses: actions/cache@v2
         with:
-          path: /tmp/.buildx-cache
+          path: /tmp/picidae-latest.tar
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
@@ -71,7 +73,7 @@ jobs:
       #     cache-from: type=local,src=/tmp/.buildx-cache
       - name: Load Docker image
         run: |
-          docker load --input /tmp/.buildx-cache
+          docker load --input /tmp/picidae-latest.tar
           docker image ls -a
       - name: Lint
         run: docker run picidae-ci:latest lint
@@ -97,9 +99,16 @@ jobs:
       #   with:
       #     name: picidae-latest
       #     path: /tmp
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/picidae-latest.tar
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
       - name: Load Docker image
         run: |
-          docker load --input /tmp/.buildx-cache
+          docker load --input /tmp/picidae-latest.tar
           docker image ls -a
       - name: Test
         run: docker run picidae-ci:latest test-ci

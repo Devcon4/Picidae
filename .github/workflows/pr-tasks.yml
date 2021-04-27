@@ -55,11 +55,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Lint
-        uses: "./client/ci"
+        uses: "./client"
         with:
           npm-command: "lint"
       - name: Test
-        uses: "./client/ci"
+        uses: "./client"
         with:
           npm-command: "test-ci"
   # run_lint:

@@ -19,4 +19,4 @@ jobs:
           load: true
           tags: picidae-ci:latest
       - name: Lint
-        run: docker run ghcr.io/devcon4/picidae-ci:latest lint
+        run: docker run picidae-ci:latest lint
